@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Distribution Hub - QR Code &amp; Coupon Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+                <span class="nav-title">Item Distribution Hub</span>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-link" data-view="dashboard">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    Dashboard
+                </button>
+                <button class="nav-link" data-view="generate">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="16"></line>
+                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                    </svg>
+                    Generate
+                </button>
+                <button class="nav-link" data-view="scanner">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                    Scanner
+                </button>
+                <button class="nav-link" data-view="history">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3h7a2 2 0 0 1 2 2v14a2 2 0 0 0 2 2h7"></path>
+                        <polyline points="3 3 3 21"></polyline>
+                    </svg>
+                    History
+                </button>
+                <button class="nav-link" data-view="analytics">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                    Analytics
+                </button>
+                <button class="nav-link" data-view="settings">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3"></path>
+                    </svg>
+                    Settings
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- View 1: Dashboard -->
+        <div id="dashboard-view" class="view active">
+            <div class="view-header">
+                <h1>Dashboard Overview</h1>
+                <p class="view-subtitle">Monitor your distribution system performance</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card" style="background: var(--color-bg-1);">
+                    <div class="stat-icon" style="color: #3b82f6;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Total Coupons</div>
+                        <div class="stat-value" id="stat-total">0</div>
+                    </div>
+                </div>
+
+                <div class="stat-card" style="background: var(--color-bg-3);">
+                    <div class="stat-icon" style="color: #22c55e;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Redeemed</div>
+                        <div class="stat-value" id="stat-redeemed">0</div>
+                    </div>
+                </div>
+
+                <div class="stat-card" style="background: var(--color-bg-2);">
+                    <div class="stat-icon" style="color: #f59e0b;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Pending</div>
+                        <div class="stat-value" id="stat-pending">0</div>
+                    </div>
+                </div>
+
+                <div class="stat-card" style="background: var(--color-bg-5);">
+                    <div class="stat-icon" style="color: #9333ea;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Success Rate</div>
+                        <div class="stat-value" id="stat-rate">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">Recent Activities</div>
+            <div class="card">
+                <div class="card__body">
+                    <div id="recent-activities" class="activities-list">
+                        <div class="empty-state">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            <p>No activities yet. Start by generating coupons!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View 2: Generate Coupons -->
+        <div id="generate-view" class="view">
+            <div class="view-header">
+                <h1>Generate Coupons</h1>
+                <p class="view-subtitle">Create new QR codes and coupons for item distribution</p>
+            </div>
+
+            <div class="card">
+                <div class="card__body">
+                    <form id="generate-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="item-name">Item Name *</label>
+                                <input type="text" id="item-name" class="form-control" placeholder="e.g., Free Coffee Voucher" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="item-category">Category *</label>
+                                <select id="item-category" class="form-control" required>
+                                    <option value="">Select category</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Food & Beverages">Food &amp; Beverages</option>
+                                    <option value="Clothing">Clothing</option>
+                                    <option value="Accessories">Accessories</option>
+                                    <option value="Services">Services</option>
+                                    <option value="Discount Vouchers">Discount Vouchers</option>
+                                    <option value="Gift Cards">Gift Cards</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="item-value">Value/Discount (USD) *</label>
+                                <input type="number" id="item-value" class="form-control" placeholder="0.00" step="0.01" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="item-quantity">Quantity to Generate *</label>
+                                <input type="number" id="item-quantity" class="form-control" placeholder="1" min="1" max="100" value="1" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="expiry-date">Expiration Date *</label>
+                                <input type="date" id="expiry-date" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="max-redemptions">Max Redemptions per Code</label>
+                                <input type="number" id="max-redemptions" class="form-control" value="1" min="1" max="10">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn--primary btn--lg btn--full-width">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Generate Coupons
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section-title">Generated Coupons</div>
+            <div class="card">
+                <div class="card__body">
+                    <div id="coupons-table-container">
+                        <div class="empty-state">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                            <p>No coupons generated yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View 3: Scanner -->
+        <div id="scanner-view" class="view">
+            <div class="view-header">
+                <h1>QR Code Scanner</h1>
+                <p class="view-subtitle">Scan or enter coupon codes for redemption</p>
+            </div>
+
+            <div class="scanner-layout">
+                <div class="scanner-section">
+                    <div class="card">
+                        <div class="card__body">
+                            <div class="scanner-tabs">
+                                <button class="scanner-tab active" data-tab="camera">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                                        <circle cx="12" cy="13" r="4"></circle>
+                                    </svg>
+                                    Camera Scan
+                                </button>
+                                <button class="scanner-tab" data-tab="manual">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="17" y1="10" x2="3" y2="10"></line>
+                                        <line x1="21" y1="6" x2="3" y2="6"></line>
+                                        <line x1="21" y1="14" x2="3" y2="14"></line>
+                                        <line x1="17" y1="18" x2="3" y2="18"></line>
+                                    </svg>
+                                    Manual Entry
+                                </button>
+                            </div>
+
+                            <div id="camera-tab-content" class="scanner-tab-content active">
+                                <div class="scanner-container">
+                                    <video id="scanner-video" autoplay playsinline></video>
+                                    <canvas id="scanner-canvas" style="display:none;"></canvas>
+                                    <div class="scanner-overlay">
+                                        <div class="scanner-frame"></div>
+                                    </div>
+                                    <div id="camera-status" class="camera-status">Initializing camera...</div>
+                                </div>
+                                <button id="start-camera" class="btn btn--primary btn--full-width">
+                                    Start Camera
+                                </button>
+                            </div>
+
+                            <div id="manual-tab-content" class="scanner-tab-content">
+                                <form id="manual-scan-form">
+                                    <div class="form-group">
+                                        <label class="form-label" for="manual-code">Enter Coupon Code</label>
+                                        <input type="text" id="manual-code" class="form-control" placeholder="e.g., QC001A5B" style="text-transform: uppercase;" required>
+                                    </div>
+                                    <button type="submit" class="btn btn--primary btn--full-width">
+                                        Validate Code
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-section">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Scan Result</h3>
+                            <div id="scan-result" class="scan-result">
+                                <div class="empty-state">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="7" height="7"></rect>
+                                        <rect x="14" y="3" width="7" height="7"></rect>
+                                        <rect x="14" y="14" width="7" height="7"></rect>
+                                        <rect x="3" y="14" width="7" height="7"></rect>
+                                    </svg>
+                                    <p>Waiting for scan...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Session Scans</h3>
+                            <div id="session-scans" class="session-scans">
+                                <div class="empty-state-small">
+                                    <p>No scans in this session yet</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View 4: History -->
+        <div id="history-view" class="view">
+            <div class="view-header">
+                <h1>Redemption History</h1>
+                <p class="view-subtitle">Track all coupon redemptions and activities</p>
+            </div>
+
+            <div class="card">
+                <div class="card__body">
+                    <div class="table-controls">
+                        <input type="text" id="history-search" class="form-control" placeholder="Search by code, item, or recipient..." style="max-width: 400px;">
+                        <button id="export-history" class="btn btn--secondary">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Export Data
+                        </button>
+                    </div>
+                    <div id="history-table-container" class="table-container">
+                        <div class="empty-state">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 3h7a2 2 0 0 1 2 2v14a2 2 0 0 0 2 2h7"></path>
+                                <polyline points="3 3 3 21"></polyline>
+                            </svg>
+                            <p>No redemptions recorded yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View 5: Analytics -->
+        <div id="analytics-view" class="view">
+            <div class="view-header">
+                <h1>Analytics &amp; Reports</h1>
+                <p class="view-subtitle">Visualize distribution patterns and performance metrics</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card" style="background: var(--color-bg-1);">
+                    <div class="stat-content">
+                        <div class="stat-label">Conversion Rate</div>
+                        <div class="stat-value" id="analytics-conversion">0%</div>
+                    </div>
+                </div>
+                <div class="stat-card" style="background: var(--color-bg-3);">
+                    <div class="stat-content">
+                        <div class="stat-label">Items Distributed</div>
+                        <div class="stat-value" id="analytics-distributed">0</div>
+                    </div>
+                </div>
+                <div class="stat-card" style="background: var(--color-bg-4);">
+                    <div class="stat-content">
+                        <div class="stat-label">Expired Unused</div>
+                        <div class="stat-value" id="analytics-expired">0</div>
+                    </div>
+                </div>
+                <div class="stat-card" style="background: var(--color-bg-6);">
+                    <div class="stat-content">
+                        <div class="stat-label">Avg. Value</div>
+                        <div class="stat-value" id="analytics-avg-value">$0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="card">
+                    <div class="card__body">
+                        <h3>Redemption Trend</h3>
+                        <div class="chart-container">
+                            <canvas id="redemption-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__body">
+                        <h3>Category Distribution</h3>
+                        <div class="chart-container">
+                            <canvas id="category-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__body">
+                        <h3>Status Overview</h3>
+                        <div class="chart-container">
+                            <canvas id="status-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__body">
+                        <h3>Top Items</h3>
+                        <div id="top-items-list" class="top-items-list">
+                            <div class="empty-state-small">
+                                <p>No data available</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View 6: Settings -->
+        <div id="settings-view" class="view">
+            <div class="view-header">
+                <h1>Settings &amp; Configuration</h1>
+                <p class="view-subtitle">Manage system preferences and security settings</p>
+            </div>
+
+            <div class="card">
+                <div class="card__body">
+                    <h3>Coupon Settings</h3>
+                    <form id="settings-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="default-validity">Default Validity Period (days)</label>
+                                <input type="number" id="default-validity" class="form-control" value="30" min="1">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="default-max-redemptions">Default Max Redemptions</label>
+                                <input type="number" id="default-max-redemptions" class="form-control" value="1" min="1" max="10">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="rate-limit">Rate Limit (attempts/hour)</label>
+                                <input type="number" id="rate-limit" class="form-control" value="100" min="10">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="session-timeout">Session Timeout (minutes)</label>
+                                <input type="number" id="session-timeout" class="form-control" value="30" min="5">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn--primary">
+                            Save Settings
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card__body">
+                    <h3>Security &amp; Fraud Detection</h3>
+                    <div class="security-info">
+                        <div class="info-item">
+                            <div class="info-label">One-Time Use Enforcement</div>
+                            <div class="status status--success">Active</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Duplicate Scan Prevention</div>
+                            <div class="status status--success">Active</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Timestamp Tracking</div>
+                            <div class="status status--success">Active</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Failed Attempts Logged</div>
+                            <div class="status status--info" id="failed-attempts-count">0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card__body">
+                    <h3>System Information</h3>
+                    <div class="system-info">
+                        <div class="info-row">
+                            <span class="info-key">App Version:</span>
+                            <span class="info-value">1.0</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Total Coupons in System:</span>
+                            <span class="info-value" id="system-total-coupons">0</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Total Redemptions:</span>
+                            <span class="info-value" id="system-total-redemptions">0</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Database Status:</span>
+                            <span class="info-value status status--success">In-Memory Active</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card__body">
+                    <h3>Danger Zone</h3>
+                    <p style="color: var(--color-text-secondary); margin-bottom: 16px;">These actions cannot be undone. Use with caution.</p>
+                    <button id="clear-all-data" class="btn btn--outline" style="border-color: var(--color-error); color: var(--color-error);">
+                        Clear All Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Notification Toast -->
+    <div id="notification" class="notification"></div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+        <!-- Frontend API base (explicit constant as requested) -->
+        <script>
+            // Explicit API URL for development. Change if your backend runs elsewhere.
+            const API_URL = 'http://localhost:5000';
+            // Mirror to window for compatibility with other scripts
+            if (typeof window !== 'undefined') window.API_URL = window.API_URL || API_URL;
+            console.info('const API_URL set to', API_URL);
+        </script>
+        <script src="app.js"></script>
+</body>
+</html>
